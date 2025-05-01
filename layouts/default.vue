@@ -1,5 +1,11 @@
 <script setup>
-// レイアウトのロジック
+import { useAuthStore } from "~/stores/auth";
+
+const authStore = useAuthStore();
+const handleLogout = () => {
+  authStore.logout();
+  navigateTo("/login");
+};
 </script>
 
 <template>
@@ -8,6 +14,10 @@
       <NuxtLink to="/">Home</NuxtLink>
       <NuxtLink to="/about">About</NuxtLink>
       <NuxtLink to="/contact">Contact</NuxtLink>
+      <button v-if="authStore.isAuthenticated" @click="handleLogout">
+        Logout
+      </button>
+      <NuxtLink v-else to="/login">Login</NuxtLink>
     </header>
     <slot />
     <footer>
